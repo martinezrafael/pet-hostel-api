@@ -13,13 +13,13 @@ const userSchema = new mongoose.Schema(
     email: {type: String,unique: true,match: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,lowercase: true},
     password: String,
     tel: {type: String,unique: true,match: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/},
-    pets: [{type: Schema.Types.ObjectId, ref: 'Pet'}],
-    reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
+    pets: [],
+    reviews: [],
     preferences: [],
     price: Number,
-    wallet: {type: Schema.Types.ObjectId, ref: 'Wallet'},
+    wallet: Number,
   },
-  { timestamps: true }
+  { timestamps: true, }
 );
 
 module.exports = mongoose.model("User", userSchema);
