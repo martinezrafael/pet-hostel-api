@@ -13,6 +13,7 @@ app.use(express.json());
 
 app.use('/users', require('./routes/user.routes'));
 app.use('/pets', require('./routes/pet.routes'));
+app.use('/spaces', require('./routes/space.routes'));
 
 
 app.listen(process.env.PORT, () => {
