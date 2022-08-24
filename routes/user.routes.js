@@ -4,7 +4,7 @@ const User = require('../models/User.model');
 const router = Router();
 
 //Rota para criação de um novo usuário
-router.post('/user', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newUser = await User.create(req.body);
     res.status(201).json(newUser);
