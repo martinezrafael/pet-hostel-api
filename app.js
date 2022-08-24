@@ -12,6 +12,7 @@ app.use(express.json());
 // const cors = require('cors');
 
 app.use('/users', require('./routes/user.routes'));
+app.use('/pets', require('./routes/pet.routes'));
 
 
 app.listen(process.env.PORT, () => {
