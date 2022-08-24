@@ -18,6 +18,7 @@ const spaceSchema = new mongoose.Schema(
     ],
     details: [],
     spaceImages: [],
+    user: {type: Schema.Types.ObjectId, ref: 'User'}
   },
   {
     timestamps: true
