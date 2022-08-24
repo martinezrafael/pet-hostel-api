@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
     reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review'}],
     preferences: [],
     price: Number,
-    wallet: Number,
+    wallet: {type: mongoose.Schema.Types.ObjectId, ref: 'Wallet'},
   },
   { timestamps: true, }
 );
