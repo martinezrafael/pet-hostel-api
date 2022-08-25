@@ -6,10 +6,11 @@ connectDb();
 const express = require('express');
 const app = express();
 
+const cors = require('cors');
+
 // Middleware que vai permitir que o express interprete um body se ele for json type
 app.use(express.json());
-
-// const cors = require('cors');
+app.use(cors());
 
 app.use('/users', require('./routes/user.routes'));
 app.use('/pets', require('./routes/pet.routes'));

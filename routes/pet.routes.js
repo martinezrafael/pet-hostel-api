@@ -44,6 +44,7 @@ router.put('/:id', async (req, res) => {
 
   try {
     let updatedPet = await Pet.findOneAndUpdate({ _id:id }, payload, { new: true })
+    res.status(200).json(updatedPet);
   } catch (error) {
     res.status(500).json({error: error.message})
   }
