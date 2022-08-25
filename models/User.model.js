@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
     host:{type: Boolean, default: false},
     guest:{type: Boolean, default: false},
     score: {type: Number, default: 0},
-    tel: {type: String, default:'00 000000000', match: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/},
+    tel: {type: String, default:'', match: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/},
     pets: [{type: mongoose.Schema.Types.ObjectId, ref: 'Pet'}],
     reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review'}],
     preferences: [],
