@@ -30,4 +30,29 @@ router.post('/signup', async (req, res) => {
   }
 })
 
+//fazer login
+router.post('/login', async (req, res) => {
+  const { userName, password } = req.body; 
+
+  try {
+
+    const user = await User.findOne({userName});
+
+    if(!user) {
+      throw new Error('Senha ou usuário inválido');
+    }
+
+    const compareHash = await bcrypt.compare(password, user.password);
+
+    if(!compareHash) {
+      throw new Error('Senha ou usuário inválido');
+    }
+
+    res.status(200).json({msg: `Usuário ${user.userName}, acessou!`});
+
+  } catch (error) {
+    res.status(401).json({msg: error.message});
+  }
+})
+
 module.exports = router;
