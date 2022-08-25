@@ -4,16 +4,16 @@ const User = require('../models/User.model');
 const router = Router();
 
 //Criar novo usuário
-router.post('/', async (req, res) => {
-  const payload = req.body
+// router.post('/', async (req, res) => {
+//   const payload = req.body
 
-  try {
-    const newUser = await User.create(payload);
-    res.status(201).json(newUser);
-  } catch (error) {
-    res.status(500).json({error: error.message});
-  }
-})
+//   try {
+//     const newUser = await User.create(payload);
+//     res.status(201).json(newUser);
+//   } catch (error) {
+//     res.status(500).json({error: error.message});
+//   }
+// })
 
 //Buscar todos os usuários
 router.get('/', async (req, res) => {

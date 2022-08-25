@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const walletSchema = new mongoose.Schema(
   {
-    balance: Number,
+    balance: {type:Number, default: 0},
   },
   {timestamps: true,}
 );
