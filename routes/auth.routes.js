@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const User = require('../models/User.model');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 
 const router = Router();
@@ -12,8 +13,10 @@ router.post('/signup', async (req, res) => {
   try {
     const user = await User.findOne({userName})
     if(user) {throw new Error('Usuário Já existe')}
+
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(password, salt);
+
     const newUser = await User.create(
       {
         userName,
@@ -21,10 +24,12 @@ router.post('/signup', async (req, res) => {
         password: passwordHash
       }
     );
+
     res.status(201).json({
       userName: newUser.userName,
       email: newUser.email,
     });
+
   } catch (error) {
     res.status(400).json({msg: error.message});
   }
@@ -35,7 +40,6 @@ router.post('/login', async (req, res) => {
   const { userName, password } = req.body; 
 
   try {
-
     const user = await User.findOne({userName});
 
     if(!user) {
@@ -48,7 +52,17 @@ router.post('/login', async (req, res) => {
       throw new Error('Senha ou usuário inválido');
     }
 
-    res.status(200).json({msg: `Usuário ${user.userName}, acessou!`});
+    const payload = {
+      userName
+    }
+
+    const token = jwt.sign(
+      payload,
+      process.env.SECRET_JWT, 
+      {expiresIn: '1 day'}
+    );
+
+    res.status(200).json({payload, token});
 
   } catch (error) {
     res.status(401).json({msg: error.message});
