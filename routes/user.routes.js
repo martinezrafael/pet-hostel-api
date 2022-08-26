@@ -6,8 +6,7 @@ const router = Router();
 //Buscar todos os usuários
 router.get('/', async (req, res) => {
   try {
-    const users = await User.find();
-    console.log(req.user)
+    const users = await User.find({}, { password: 0 }).populate('pets');
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({error: error.message})
@@ -49,6 +48,24 @@ router.delete('/:id', async (req, res) => {
   } catch (error) {
     res.status(500).json({error: error.message})
   }
+})
+
+//usuário logado cria um novo pet
+router.put('/cadastroPet/:petId', async (req, res) => {
+  const { petId } = req.params;
+  const { userName } = req.user;
+
+  try {
+    const updateUser = await User.findOneAndUpdate(
+      { userName },
+      { $push: {pets: petId} }, 
+      {new: true}
+    ).select('-password').populate('pets');
+    res.status(200).json(updateUser);
+  } catch (error) {
+    res.status(500).json({error: error.message})
+  }
+
 })
 
 module.exports = router;
