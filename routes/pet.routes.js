@@ -3,17 +3,7 @@ const Pet = require('../models/Pet.model');
 
 const router = Router();
 
-//Criar novo pet
-router.post('/', async (req, res) => {
-  const payload = req.body;
 
-  try {
-    const newPet = await Pet.create(payload);
-    res.status(201).json(newPet);
-  } catch (error) {
-    res.status(500).json({error: error.message});
-  }
-})
 
 //Buscar todos os pets
 router.get('/', async (req, res) => {
