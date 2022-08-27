@@ -4,7 +4,7 @@ const auth = (req, res, next) => {
   const token = req.get('Authorization');
 
   if(!token){
-    return res.status(401).json({msg: 'Request without token'})
+    return res.status(401).json({msg: 'Não existe um token'})
   }
   
   const tokenWithoutBearer = token.split(' ')[1];

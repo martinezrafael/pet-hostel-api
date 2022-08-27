@@ -26,7 +26,7 @@ router.post('/cadastroPet', async (req, res) => {
   }
 })
 
-//buscar pets do usuário cadastrado
+//buscar pets do usuário logado
 router.get('/myPets', async (req, res) => {
   const { userName } = req.user;
 
@@ -43,19 +43,6 @@ router.get('/myPets', async (req, res) => {
   }
 })
 
-
-
-//Buscar um pet por Id
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const pet = await Pet.findById(id);
-    res.status(200).json(pet);
-  } catch (error) {
-    res.status(500).json({error: error.message})
-  }
-})
 
 //Atualiza um pet
 router.put('/:id', async (req, res) => {

@@ -11,6 +11,11 @@ router.post('/signup', async (req, res) => {
   const { userName, email, password } = req.body;
 
   try {
+
+    if(!userName || !email || !password){
+      throw new Error('Preencha todos os campos');
+    }
+
     const user = await User.findOne({userName})
     if(user) {throw new Error('Usuário Já existe')}
 
@@ -23,12 +28,12 @@ router.post('/signup', async (req, res) => {
         email,
         password: passwordHash
       }
-    );
+    )
 
     res.status(201).json({
       userName: newUser.userName,
       email: newUser.email,
-    });
+    })
 
   } catch (error) {
     res.status(400).json({msg: error.message});
@@ -59,7 +64,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign(
       payload,
       process.env.SECRET_JWT, 
-      {expiresIn: '1 day'}
+      {expiresIn: '10m'}
     );
 
     res.status(200).json({payload, token});

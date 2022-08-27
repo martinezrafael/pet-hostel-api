@@ -16,13 +16,13 @@ app.use(cors());
 
 //rotas públicas
 app.use('/auth', require('./routes/auth.routes'));
-
+app.use('/users', require('./routes/user.list.routes'));
 
 //midlleware de autorização
 app.use(require('./middlewares/auth.middleware'));
 
 // rotas privadas
-app.use('/users', require('./routes/user.routes'));
+app.use('/editUser', require('./routes/user.edit.routes'))
 app.use('/pets', require('./routes/pet.routes'));
 app.use('/spaces', require('./routes/space.routes'));
 app.use('/reviews', require('./routes/review.routes'));

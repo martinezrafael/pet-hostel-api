@@ -26,32 +26,6 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-//Atualiza um usuário
-router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const payload = req.body;
-
-  try {
-    let updatedUser = await User.findOneAndUpdate({ _id:id }, payload, { new: true });
-    res.status(200).json(updatedUser);
-  } catch (error) {
-    res.status(500).json({error: error.message})
-  }
-})
-
-//Deleta um usuário
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    await User.findByIdAndDelete(id);
-    res.status(204).json();
-  } catch (error) {
-    res.status(500).json({error: error.message})
-  }
-})
 
  
-
-
 module.exports = router;
