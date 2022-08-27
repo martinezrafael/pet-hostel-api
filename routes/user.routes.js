@@ -51,30 +51,7 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
-//usuário logado cria um novo pet
-router.post('/cadastroPet', async (req, res) => {
-  const payload = req.body;
-  const { userName } = req.user;
-
-  try {
-    const newPet = await Pet.create(payload);
-
-    const updateUser = await User.findOneAndUpdate(
-      { userName },
-      { $push: {pets: newPet._id} },
-      { new: true }
-    )
-    .select('-password')
-    .populate('pets');
-    
-    res.status(200).json(updateUser);
-  } catch (error) {
-    res.status(500).json({error: error.message})
-  }
-
-
-})
-
+ 
 
 
 module.exports = router;
