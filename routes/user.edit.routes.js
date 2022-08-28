@@ -40,7 +40,7 @@ router.delete('/:id', async (req, res) => {
       res.status(204).json();
     }
 
-    throw new Error('Invalid user');
+    throw new Error('Usuário Inválido');
 
   } catch (error) {
     res.status(500).json({error: error.message})

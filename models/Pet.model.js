@@ -9,6 +9,7 @@ const petSchema = new mongoose.Schema(
     vaccinated: { type: Boolean, required: true, default: false },
     petAvatar: String,
     temperament: String,
+    type: String,
     owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   },
   {
