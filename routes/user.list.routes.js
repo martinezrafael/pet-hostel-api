@@ -14,18 +14,39 @@ router.get('/', async (req, res) => {
   }
 })
 
-//Busca um usuário por Id
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  
+
+//buscar usuários pelo preço
+router.get('/searchUser/price', async (req, res) => {
+  const { price } = req.body;
+
   try {
-    const user = await User.findById(id);
+    const user = await User.find({price: { $lte: price }});
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({error: error.message})
   }
+
+})
+
+//buscar usuários pelo score
+router.get('/searchUser/score', async (req, res) => {
+  const { score } = req.body;
+
+  try {
+    const user = await User.find({score: { $gte: score }});
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({error: error.message})
+  }
+
 })
 
 
- 
+router.get('/searchUser/address', async (req, res) => {
+    
+})
+
+
+
+
 module.exports = router;

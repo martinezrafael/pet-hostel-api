@@ -17,7 +17,7 @@ router.post('/newPet', async (req, res) => {
     type
   } = req.body;
 
-  const { userName } = req.user;
+  const { userName, id } = req.user;
 
   try {
 
@@ -25,9 +25,6 @@ router.post('/newPet', async (req, res) => {
       throw new Error('Preencha todos os campos');
     }
 
-   const userFromDb = await User.findOne({userName});
-   const { _id } = userFromDb;
-   
    const newPet = await Pet.create(
     {
       name,
@@ -37,8 +34,14 @@ router.post('/newPet', async (req, res) => {
       vaccinated,
       temperament,
       type,
-      owner: _id
+      owner: id
     }
+   )
+
+   const userUpdate = await User. findOneAndUpdate(
+    {userName},
+    {$push: {pets: newPet}},
+    { new: true }
    )
 
    res.status(201).json({
@@ -62,23 +65,19 @@ router.post('/newPet', async (req, res) => {
 
 //buscar pets do usuário logado
 router.get('/myPets', async (req, res) => {
-  const { id } = req.params;
-  const { userName } = req.user;
+  const { id } = req.user;
   
-  const userDb = await User.findOne({ userName }).populate('pets');
-
   try {
-    console.log(id);
-    if(!userDb.pets.length){
-      return res.status(200).json({msg: 'nenhum pet cadastrado'})
-    }
+    const petsUserFomDb = await Pet.find({owner: id})
 
-    if(id === userDb.id) {
-      await Pet.findOne({id});
+    for (let pet of petsUserFomDb){
+      let petOwnerStr = pet.owner.toString();
+      
+      if(petOwnerStr === id){
+        res.status(200).json(petsUserFomDb);
+      }
+
     }
-  
-    res.status(200).json(userDb.pets);
-    
   } catch (error) {
     res.status(500).json({error: error.message})
   }
@@ -89,23 +88,21 @@ router.get('/myPets', async (req, res) => {
 router.put('/updatePet/:petId', async (req, res) => {
   const { petId } = req.params;
   const payload = req.body;
-  const { userName } = req.user;
-
-  const userDb = await User.findOne({userName});
 
   try {
-    
-    if(userDb){
-      let updatedPet = await Pet.findOneAndUpdate({_id: petId}, payload, { new: true });
-      res.status(200).json(updatedPet);
-    }
+   
+    const updatePet = await Pet.findOneAndUpdate({petId: petId}, payload, {new: true});
 
-    throw new Error('Usuário Inválido');
+    res.status(200).json(updatePet);
 
   } catch (error) {
     res.status(500).json({error: error.message})
   }
+
 })
+
+
+
 
 
 //Deleta um pet

@@ -5,7 +5,7 @@ const router = Router();
 
 
 //Atualiza um usuário
-router.put('/:id', async (req, res) => {
+router.put('/editUser/:id', async (req, res) => {
   const { id } = req.params;
   const payload = req.body;
   const { userName } = req.user;
