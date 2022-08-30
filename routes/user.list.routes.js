@@ -41,11 +41,17 @@ router.get('/searchUser/score', async (req, res) => {
 
 })
 
+router.get('/searchUser/city', async (req, res) => {
+  const { address } = req.body;
 
-router.get('/searchUser/address', async (req, res) => {
-    
+  try {
+    const user = await User.find({score: { $gte: score }});
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({error: error.message})
+  }
+
 })
-
 
 
 
