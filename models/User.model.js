@@ -7,8 +7,6 @@ const userSchema = new mongoose.Schema(
     email: {type: String, unique: true, lowercase: true, required: true, match: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/},
     password: {type: String, required: true},
     about: {type: String, maxlength: 300, default:''},
-    host:{type: Boolean, default: false},
-    guest:{type: Boolean, default: false},
     address: {
       street: String,
       number: Number,
@@ -22,7 +20,6 @@ const userSchema = new mongoose.Schema(
     tel: {type: String, default:'', match: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/},
     pets: [{type: mongoose.Schema.Types.ObjectId, ref: 'Pet'}],
     reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review'}],
-    preferences: [],
     price: {type: Number, default: 0},
     wallet: {type: mongoose.Schema.Types.ObjectId, ref: 'Wallet'},
   },

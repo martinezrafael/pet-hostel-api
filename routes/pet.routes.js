@@ -4,7 +4,7 @@ const User = require('../models/User.model');
 
 const router = Router();
 
-//usuário logado cria um novo pet
+//Criar um novo pet
 router.post('/newPet', async (req, res) => {
 
   const {
@@ -63,12 +63,12 @@ router.post('/newPet', async (req, res) => {
 })
 
 
-//buscar pets do usuário logado
+//listar pets
 router.get('/myPets', async (req, res) => {
   const { id } = req.user;
   
   try {
-    const petsUserFomDb = await Pet.find({owner: id})
+    const petsUserFomDb = await Pet.find({owner: id});
 
     for (let pet of petsUserFomDb){
       let petOwnerStr = pet.owner.toString();
@@ -85,45 +85,31 @@ router.get('/myPets', async (req, res) => {
 
 
 //Atualiza um pet
-router.put('/updatePet/:petId', async (req, res) => {
-  const { petId } = req.params;
+router.put('/petUpdate/:id', async (req, res) => {
+  const { id } = req.params;
   const payload = req.body;
 
   try {
-   
-    const updatePet = await Pet.findOneAndUpdate({petId: petId}, payload, {new: true});
-
+    const updatePet = await Pet.findByIdAndUpdate(id, payload, {new: true});
     res.status(200).json(updatePet);
-
   } catch (error) {
     res.status(500).json({error: error.message})
   }
 
 })
-
-
-
-
 
 //Deleta um pet
-router.delete('/deletePet', async (req, res) => {
+router.delete('/petDelete/:id', async (req, res) => {
   const { id } = req.params;
-  const { userName } = req.user;
 
-  const userDb = await User.findOne({userName});
-  
   try {
-
-    if(id === userDb.id){
-      await Pet.findByIdAndDelete(id);
-      res.status(204).json();
-    }
-
-    throw new Error('Usuário Inválido');
-
+    await Pet.findByIdAndDelete(id);
+    res.status(204).json();
   } catch (error) {
     res.status(500).json({error: error.message})
   }
+
 })
+
 
 module.exports = router;

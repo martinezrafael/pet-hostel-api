@@ -25,7 +25,7 @@ app.use(require('./middlewares/auth.middleware'));
 app.use('/user', require('./routes/user.edit.routes'))
 app.use('/pets', require('./routes/pet.routes'));
 app.use('/reviews', require('./routes/review.routes'));
-app.use('/wallet', require('./routes/wallet.routes'));
+app.use('/myWallet', require('./routes/wallet.routes'));
 
 
 app.listen(process.env.PORT, () => {

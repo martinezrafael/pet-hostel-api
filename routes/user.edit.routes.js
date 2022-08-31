@@ -5,29 +5,30 @@ const router = Router();
 
 
 //Atualiza um usuário
-router.put('/editUser/:id', async (req, res) => {
-  const { id } = req.params;
+router.put('/userUpdate/:userId', async (req, res) => {
+  const { userId } = req.params;
   const payload = req.body;
-  const { userName } = req.user;
-
-  const userDb = await User.findOne({userName});
+  const { id } = req.user;
 
   try {
 
-    if (id === userDb.id){
-      let updatedUser = await User.findOneAndUpdate({ _id:id }, payload, { new: true });
-      res.status(200).json(updatedUser);
+    if (userId === id){
+      const userUpdate = await User.findByIdAndUpdate(userId, payload, { new: true });
+      return res.status(200).json(userUpdate);
     }
 
-    throw new Error('Invalid user');
+    throw new Error('Você não pode alterar essas informações');
 
   } catch (error) {
-    res.status(500).json({error: error.message})
+    res.status(500).json({message: error.message});
   }
+
+
 })
 
+
 //Deleta um usuário
-router.delete('/:id', async (req, res) => {
+router.delete('deleteProfile/:id', async (req, res) => {
   const { id } = req.params;
   const { userName } = req.user;
   

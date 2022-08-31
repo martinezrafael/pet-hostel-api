@@ -15,18 +15,6 @@ router.post('/', async (req, res) => {
   }
 })
 
-//Busca uma Wallet por id
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const wallet = await Wallet.findById(id);
-    res.status(200).json(wallet);
-  } catch (error) {
-    res.status(500).json({error: error.message})
-  }
-})
-
 //Atualiza uma Wallet
 router.put('/:id', async (req, res) => {
   const { id } = req.params;

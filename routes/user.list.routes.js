@@ -41,6 +41,7 @@ router.get('/searchUser/score', async (req, res) => {
 
 })
 
+//buscar pelo endereço
 router.get('/searchUser/city', async (req, res) => {
   const { address } = req.body;
 
